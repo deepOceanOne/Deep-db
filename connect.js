@@ -38,10 +38,30 @@ function _read_src(src_path,db){
 
 function func(data,db) {                                                                                                                                                                                                                                 
    console.log("insert one item done"); 
+
+   var strlen = data.length;
+   var strconst = 300;
+   var strtop  = strlen/strconst;
    var inserttime = timedString.now();
+   for(var i=0;i<strtop-2;i++){
+		
+   var data_seg = data.substring(i*strconst,(i+2)*strconst);
+   inserttime = timedString.now();
+   var content = 	{
+		"title" :  inserttime,
+		"text" : data_seg 
+	};
+  insertOps.insert(db,content,function(){
+        console.log("insert complete.... : "+i);
+  });    
+
+   }	 
+
+   inserttime = timedString.now();
+   var data_seg = data.substring((i+1)*strconst);
    content = 	{
 		"title" :  inserttime,
-		"text" : data 
+		"text" : data_seg 
 	};
   insertOps.insert(db,content,function(){
         db.close();
